@@ -1,0 +1,31 @@
+body {
+    background-color: #fff;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.image {
+    width: 370px;
+    margin-top: 50px;
+}
+
+.copyright {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 50px;
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+@media(max-width: 770px) {
+    .container {
+        margin: 0 10%;
+    }
+    .image {
+        max-width: 100%;
+    }
+}

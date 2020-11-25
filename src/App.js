@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { Cards, Chart, CountryPicker } from './components'
+import styles from './App.module.css'
+import { fetchData } from './api'
+import coronaImage from './img/image.png'
+
+const App = () => {
+    const [covidData, setCovidData] = useState({
+        data: {},
+        country: ''
+    })
+
+    useEffect(() => {
+        const fetchAPI = async () => {
+            setCovidData({ data: await fetchData() })
+        }
+        fetchAPI()
+    }, [setCovidData])
+
+    const handleCountryChange = async (country) => {
+        const fetchedData = await fetchData(country)
+        setCovidData({ data: fetchedData, country: country })
+    }
+
+    return (
+        <div className={styles.container}>
+            <img src={coronaImage}/>
+            <Cards data={covidData.data}/>
+            <CountryPicker handleCountryChange={handleCountryChange} />
+            <Chart data={covidData.data} country={covidData.country}/>
+            <p className={styles.copyright}>Author by Arhur Splavskiy</p>
+        </div>
+    )
 }
 
-export default App;
+export default App
